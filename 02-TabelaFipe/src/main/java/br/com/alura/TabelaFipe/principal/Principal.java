@@ -1,6 +1,7 @@
 package br.com.alura.TabelaFipe.principal;
 
 import br.com.alura.TabelaFipe.model.Dados;
+import br.com.alura.TabelaFipe.model.Modelos;
 import br.com.alura.TabelaFipe.service.ConsumoApi;
 import br.com.alura.TabelaFipe.service.ConverteDados;
 
@@ -52,5 +53,12 @@ public class Principal {
     var codigoMarca = leitura.nextInt();
 
     endereco = endereco + "/" + codigoMarca + "/modelos";
+    json = consumoApi.obterDados(endereco);
+    var modeloLista = converteDados.obterDados(json, Modelos.class);
+
+    System.out.println("\nModelos da marca escolhida: ");
+    modeloLista.modelos().stream()
+      .sorted(Comparator.comparing(Dados::nome))
+      .forEach(System.out::println);
   }
 }
